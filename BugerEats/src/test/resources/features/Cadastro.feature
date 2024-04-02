@@ -1,5 +1,5 @@
 #Author: gabrieldeoliveiraneves@gmail.com
-@tag
+
 
 Feature: Cadastro para fazer entregas
   Como uma pessoa interessada em fazer entregas
@@ -8,10 +8,10 @@ Feature: Cadastro para fazer entregas
   
   Background:
   	Given que estou na página do Buger Eats
-  	When clicar em "Cadastre-se para fazer entregas"
-
+  	When clicar em “Cadastre-se para fazer entregas”
+@cadastro
   Scenario: Cadastro completo com veículo motorizado
-    And o usuário deseja se cadastrar para fazer entregas com um veículo motorizado
+    And o usuário é direcionado para página de cadastro
     And o usuário completa o cadastro com todos os dados obrigatórios, incluindo a CNH
     Then o usuário é cadastrado com sucesso no sistema
 
@@ -28,15 +28,15 @@ Feature: Cadastro para fazer entregas
   Scenario: Cadastro com CPF inválido
     And o usuário deseja se cadastrar para fazer entregas
     And o usuário tenta se cadastrar com um número de CPF inválido
-    Then o sistema apresenta uma mensagem de erro indicando "CPF inválido"
+    Then o sistema apresenta uma mensagem de erro indicando “CPF inválido”
 
-  Scenario: Cadastro com método de entrega "Bike Elétrica" e upload de CNH opcional
-    And o usuário escolhe "Bike Elétrica" como método de entrega durante o cadastro
+  Scenario: Cadastro com método de entrega “Bike Elétrica” e upload de CNH opcional
+    And o usuário escolhe “Bike Elétrica” como método de entrega durante o cadastro
     And o usuário completa o cadastro, optando por fazer ou não o upload da CNH
     Then o usuário é cadastrado com sucesso no sistema
 
   Scenario: Falha ao buscar CEP inexistente
     And o usuário está preenchendo o formulário de cadastro
     And o usuário insere um CEP que não existe e solicita a busca
-    Then o sistema apresenta uma mensagem de erro "CEP não encontrado"
+    Then o sistema apresenta uma mensagem de erro “CEP não encontrado”
 

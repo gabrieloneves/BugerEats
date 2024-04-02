@@ -15,7 +15,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @CucumberOptions(
 		features = "src/test/resources/features",
 		glue = "steps",
-		tags = "@loginpositivos",
+		tags = "@cadastro",
 		monochrome = true,
 		dryRun = false,
 		plugin = {"pretty", "html:target/cucumber-reports.html"},
@@ -24,8 +24,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Executa extends DriverFactory {
 	
-	
-
 	public static void abrirNavegador(String navegador, String url) throws Exception {
 		
 		if (navegador.equalsIgnoreCase("Chrome")) {
