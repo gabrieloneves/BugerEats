@@ -1,6 +1,6 @@
 #Author: gabrieldeoliveiraneves@gmail.com
 
-
+@cadastro @regressivos
 Feature: Cadastro para fazer entregas
   Como uma pessoa interessada em fazer entregas
   Eu quero me cadastrar no sistema
@@ -9,34 +9,53 @@ Feature: Cadastro para fazer entregas
   Background:
   	Given que estou na página do Buger Eats
   	When clicar em “Cadastre-se para fazer entregas”
-@cadastro
-  Scenario: Cadastro completo com veículo motorizado
-    And o usuário é direcionado para página de cadastro
-    And o usuário completa o cadastro com todos os dados obrigatórios, incluindo a CNH
-    Then o usuário é cadastrado com sucesso no sistema
-
-  Scenario: Cadastro completo com bicicleta elétrica
-    And o usuário deseja se cadastrar para fazer entregas com uma bicicleta elétrica
+  	And o usuário é direcionado para página de cadastro
+  	
+	@moto @positivo
+  Scenario: Cadastro completo com moto
     And o usuário completa o cadastro com todos os dados obrigatórios
-    Then o usuário é cadastrado com sucesso no sistema sem a necessidade de enviar CNH
-
+    And o usuário escolhe o método de entrega moto
+    And o usuário faz upload da CNH
+    Then o usuário é cadastrado com sucesso no sistema
+	
+	@bikeEletrica @positivo
+  Scenario: Cadastro completo com bike elétrica
+    And o usuário completa o cadastro com todos os dados obrigatórios
+    And o usuário escolhe o método de entrega bike elétrica
+    And o usuário faz upload da CNH
+    Then o usuário é cadastrado com sucesso no sistema
+    
+  @vanCarro @positivo
+  Scenario: Cadastro completo com van/carro
+    And o usuário completa o cadastro com todos os dados obrigatórios
+    And o usuário escolhe o método de entrega van/carro
+    And o usuário faz upload da CNH
+    Then o usuário é cadastrado com sucesso no sistema
+  
+  @semCNH @negativo
+  Scenario: Cadastro completo com bike elétrica sem CNH
+    And o usuário completa o cadastro com todos os dados obrigatórios
+    And o usuário escolhe o método de entrega bike elétrica
+    But o usuário não faz upload da CNH
+    Then o usuário é informado sobre a necessidade de fazer upload de CNH
+    
+  @cadastroIncompleto @negativo  
   Scenario: Cadastro incompleto por falta de dados obrigatórios
-    And o usuário deseja se cadastrar para fazer entregas
     And o usuário tenta se cadastrar sem preencher todos os campos obrigatórios
     Then o sistema apresenta mensagens indicando quais campos são obrigatórios
 
+	@CPFInvalido @negativo
   Scenario: Cadastro com CPF inválido
-    And o usuário deseja se cadastrar para fazer entregas
     And o usuário tenta se cadastrar com um número de CPF inválido
     Then o sistema apresenta uma mensagem de erro indicando “CPF inválido”
 
-  Scenario: Cadastro com método de entrega “Bike Elétrica” e upload de CNH opcional
-    And o usuário escolhe “Bike Elétrica” como método de entrega durante o cadastro
-    And o usuário completa o cadastro, optando por fazer ou não o upload da CNH
-    Then o usuário é cadastrado com sucesso no sistema
+	@emailInvalido @negativo
+  Scenario: Cadastro com e-mail inválido
+    And o usuário tenta se cadastrar com um email inválido
+    Then o sistema apresenta uma mensagem de erro “e-mail inválido”
 
-  Scenario: Falha ao buscar CEP inexistente
-    And o usuário está preenchendo o formulário de cadastro
-    And o usuário insere um CEP que não existe e solicita a busca
+	@CEPInvalido @negativo
+	Scenario: Cadastro com CEP inválido
+    And o usuário tenta se cadastrar com um número de CEP inválido
     Then o sistema apresenta uma mensagem de erro “CEP não encontrado”
-
+    

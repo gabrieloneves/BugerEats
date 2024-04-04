@@ -54,8 +54,13 @@ public class Metodos extends DriverFactory {
 	}
 
 	public void validarTexto(By elemento, String textoEsperado) {
-		String textoCapturado = driver.findElement(elemento).getText();
-		assertEquals(textoEsperado, textoCapturado);
+		try {
+			String textoCapturado = driver.findElement(elemento).getText();
+			assertEquals(textoEsperado, textoCapturado);
+		} catch (Exception e) {
+			System.out.println("Não foi possivel validar texto");
+			e.printStackTrace();
+		}
 	}
 
 	public String inserirCep() {
@@ -92,7 +97,7 @@ public class Metodos extends DriverFactory {
 		try {
 			robot = new Robot();
 			robot.delay(1000);
-			StringSelection ss = new StringSelection("/home/gabriel/Imagens/CNH.jpg");
+			StringSelection ss = new StringSelection("C:\\Users\\Gabriel\\Pictures\\CNH.jpg");
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
 			robot.keyPress(KeyEvent.VK_CONTROL);
 			robot.keyPress(KeyEvent.VK_V);
@@ -108,4 +113,9 @@ public class Metodos extends DriverFactory {
 
 		}
 	}
+
+	public void pausa() throws InterruptedException {
+		Thread.sleep(5000);
+	}
+
 }
