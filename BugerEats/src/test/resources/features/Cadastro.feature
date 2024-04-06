@@ -58,4 +58,10 @@ Feature: Cadastro para fazer entregas
 	Scenario: Cadastro com CEP inválido
     And o usuário tenta se cadastrar com um número de CEP inválido
     Then o sistema apresenta uma mensagem de erro “CEP não encontrado”
+  
+  @maisDeUmMetodosDeEntrega @negativo
+  Scenario: Selecionar mais de um metodo de entrega
+  	And o usuário completa o cadastro com todos os dados obrigatórios
+    And o usuário tenta se cadastrar selecionando mais de um método de entrega
+    Then o sistema apresenta uma mensagem de erro “Selecionar apenas um método de entrega”
     

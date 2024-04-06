@@ -1,5 +1,6 @@
 package runner;
 
+import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -15,7 +16,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @CucumberOptions(
 		features = "src/test/resources/features",
 		glue = "steps",
-		tags = "@CEPInvalido",
+		tags = "@regressivos",
 		monochrome = true,
 		dryRun = false,
 		plugin = {"pretty", "html:target/cucumber-reports.html"},
@@ -44,11 +45,8 @@ public class Executa extends DriverFactory {
 		driver.manage().window().maximize();	
 	}
 	
-	/**
 	@AfterClass
 	public static void fecharNavegador() {
 		driver.quit();
 	}
-	 */
 }
-

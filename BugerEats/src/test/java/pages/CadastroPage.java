@@ -30,5 +30,6 @@ public class CadastroPage extends DriverFactory {
 	public By CPFInvalido = By.xpath("//*[text()='Oops! CPF inválido']");
 	public By emailInvalido = By.xpath("//*[text()='Oops! Email com formato inválido.']");
 	public By CEPInvalido = By.xpath("//*[text()='Informe um CEP válido']");
+	public By apenasUmMetodo = By.xpath("//*[text()='Oops! Selecione apenas um método de entrega");
 
 }

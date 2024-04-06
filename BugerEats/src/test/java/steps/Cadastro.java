@@ -25,7 +25,7 @@ public class Cadastro {
 
 	@When("clicar em “Cadastre-se para fazer entregas”")
 	public void clicarEmCadastreSeParaFazerEntregas() {
-		metodos.clicar(homepage.cadastreSeBtn);
+		metodos.clicar(homepage.cadastreSeBtn, "clicando em botão cadastre-se");
 	}
 
 	@When("o usuário é direcionado para página de cadastro")
@@ -36,65 +36,67 @@ public class Cadastro {
 
 	@When("o usuário completa o cadastro com todos os dados obrigatórios")
 	public void o_usuário_completa_o_cadastro_com_todos_os_dados_obrigatórios() {
-		metodos.escrever(cadastropage.nome, "Fulano de Tal");
-		metodos.escrever(cadastropage.cpf, "18259550008");
-		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com");
-		metodos.escrever(cadastropage.whatsapp, "67982341457");
-		metodos.escrever(cadastropage.cep, "22451530");
-		metodos.clicar(cadastropage.buscarCepBtn);
-		metodos.escrever(cadastropage.numero, "297");
-		metodos.escrever(cadastropage.complemento, "Casa 1");
+		metodos.escrever(cadastropage.nome, "Fulano de Tal", "preenchendo o campo nome");
+		metodos.escrever(cadastropage.cpf, "18259550008", "preenchendo o campo CPF");
+		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com", "preenchendo o campo e-mail");
+		metodos.escrever(cadastropage.whatsapp, "67982341457", "preenchendo o campo WhatsApp");
+		metodos.escrever(cadastropage.cep, "22451530", "preenchendo o campo CEP");
+		metodos.clicar(cadastropage.buscarCepBtn, "clicando em botão buscar CEP");
+		metodos.escrever(cadastropage.numero, "297", "preenchendo o campo número");
+		metodos.escrever(cadastropage.complemento, "Casa 1", "preenchendo o campo complemento");
 		metodos.tirarEvidencia("cadastro", "CadastroComTodosOsDadosObrigatorios");
 	}
 
 	@When("o usuário escolhe o método de entrega moto")
 	public void o_usuário_escolhe_o_método_de_entrega_moto() {
-		metodos.clicar(cadastropage.moto);
+		metodos.clicar(cadastropage.moto, "escolhendo método moto");
 		metodos.tirarEvidencia("cadastro", "Moto");
 	}
 
 	@When("o usuário faz upload da CNH")
 	public void o_usuário_faz_upload_da_cnh() {
-		metodos.clicar(cadastropage.fotoDaSuaCNH);
+		metodos.clicar(cadastropage.fotoDaSuaCNH, "clicando para carregar foto");
 		metodos.uploadArquivo();
 		metodos.tirarEvidencia("cadastro", "UploadDaCNH");
 	}
 
 	@Then("o usuário é cadastrado com sucesso no sistema")
 	public void oUsuárioÉCadastradoComSucessoNoSistema() {
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 		metodos.validarTexto(cadastropage.cadastroComSucesso, "Aí Sim...");
 		metodos.tirarEvidencia("cadastro", "CadastroComSucesso");
+		Executa.fecharNavegador();
 	}
 
 	@When("o usuário escolhe o método de entrega bike elétrica")
 	public void o_usuário_escolhe_o_método_de_entrega_bike_elétrica() {
-		metodos.clicar(cadastropage.bikeEletrica);
+		metodos.clicar(cadastropage.bikeEletrica, "escolhendo método bike eletrica");
 		metodos.tirarEvidencia("cadastro", "BikeEletrica");
 	}
 
 	@When("o usuário escolhe o método de entrega van\\/carro")
 	public void o_usuário_escolhe_o_método_de_entrega_van_carro() {
-		metodos.clicar(cadastropage.vanCarro);
+		metodos.clicar(cadastropage.vanCarro, "escolhendo método van/carro");
 		metodos.tirarEvidencia("cadastro", "VanCarro");
 	}
 
 	@When("o usuário não faz upload da CNH")
 	public void o_usuário_não_faz_upload_da_cnh() {
 		metodos.tirarEvidencia("cadastro", "SemUpload");
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 	}
 
 	@Then("o usuário é informado sobre a necessidade de fazer upload de CNH")
 	public void o_usuário_é_informado_sobre_a_necessidade_de_fazer_upload_de_cnh() {
 		metodos.validarTexto(cadastropage.adicioneCNH, "Adicione uma foto da sua CNH");
 		metodos.tirarEvidencia("cadastro", "AdicioneUmaFotoDaDuaCNH");
+		Executa.fecharNavegador();
 	}
 
 	@When("o usuário tenta se cadastrar sem preencher todos os campos obrigatórios")
 	public void o_usuário_tenta_se_cadastrar_sem_preencher_todos_os_campos_obrigatórios() {
 		metodos.tirarEvidencia("cadastro", "SemCamposObrigatorios");
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 	}
 
 	@Then("o sistema apresenta mensagens indicando quais campos são obrigatórios")
@@ -105,66 +107,83 @@ public class Cadastro {
 		metodos.validarTexto(cadastropage.informarCEP, "É necessário informar o CEP");
 		metodos.validarTexto(cadastropage.informarNumEndereco, "É necessário informar o número do endereço");
 		metodos.tirarEvidencia("cadastro", "AlertasDeCamposEmBranco");
+		Executa.fecharNavegador();
 	}
 
 	@When("o usuário tenta se cadastrar com um número de CPF inválido")
 	public void o_usuário_tenta_se_cadastrar_com_um_número_de_cpf_inválido() {
-		metodos.escrever(cadastropage.nome, "Fulano de Tal");
-		metodos.escrever(cadastropage.cpf, "00000000000");
-		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com");
-		metodos.escrever(cadastropage.whatsapp, "67982341457");
-		metodos.escrever(cadastropage.cep, "22451530");
-		metodos.clicar(cadastropage.buscarCepBtn);
-		metodos.escrever(cadastropage.numero, "297");
-		metodos.escrever(cadastropage.complemento, "Casa 1");
+		metodos.escrever(cadastropage.nome, "Fulano de Tal", "preenchendo o campo nome");
+		metodos.escrever(cadastropage.cpf, "00000000000", "preenchendo o campo CPF");
+		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com", "preenchendo o campo e-mail");
+		metodos.escrever(cadastropage.whatsapp, "67982341457", "preenchendo o campo WhatsApp");
+		metodos.escrever(cadastropage.cep, "22451530", "preenchendo o campo CEP");
+		metodos.clicar(cadastropage.buscarCepBtn, "clicando em botão buscar CEP");
+		metodos.escrever(cadastropage.numero, "297", "preenchendo o campo número");
+		metodos.escrever(cadastropage.complemento, "Casa 1", "preenchendo o campo complemento");
 		metodos.tirarEvidencia("cadastro", "CPFInvalido");
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 	}
 
 	@Then("o sistema apresenta uma mensagem de erro indicando “CPF inválido”")
 	public void o_sistema_apresenta_uma_mensagem_de_erro_indicando_cpf_inválido() {
 		metodos.validarTexto(cadastropage.CPFInvalido, "Oops! CPF inválido");
 		metodos.tirarEvidencia("cadastro", "AlertaCPFInvalido");
+		Executa.fecharNavegador();
 	}
 
 	@When("o usuário tenta se cadastrar com um email inválido")
 	public void o_usuário_tenta_se_cadastrar_com_um_email_inválido() {
-		metodos.escrever(cadastropage.nome, "Fulano de Tal");
-		metodos.escrever(cadastropage.cpf, "18259550008");
-		metodos.escrever(cadastropage.email, "fulanodetalgmail.com");
-		metodos.escrever(cadastropage.whatsapp, "67982341457");
-		metodos.escrever(cadastropage.cep, "22451530");
-		metodos.clicar(cadastropage.buscarCepBtn);
-		metodos.escrever(cadastropage.numero, "297");
-		metodos.escrever(cadastropage.complemento, "Casa 1");
+		metodos.escrever(cadastropage.nome, "Fulano de Tal", "preenchendo o campo nome");
+		metodos.escrever(cadastropage.cpf, "18259550008", "preenchendo o campo CPF");
+		metodos.escrever(cadastropage.email, "fulanodetalgmail.com", "preenchendo o campo e-mail");
+		metodos.escrever(cadastropage.whatsapp, "67982341457", "preenchendo o campo WhatsApp");
+		metodos.escrever(cadastropage.cep, "22451530", "preenchendo o campo CEP");
+		metodos.clicar(cadastropage.buscarCepBtn, "clicando em botão buscar CEP");
+		metodos.escrever(cadastropage.numero, "297", "preenchendo o campo número");
+		metodos.escrever(cadastropage.complemento, "Casa 1", "preenchendo o campo complemento");
 		metodos.tirarEvidencia("cadastro", "EmailInvalido");
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 	}
 
 	@Then("o sistema apresenta uma mensagem de erro “e-mail inválido”")
 	public void o_sistema_apresenta_uma_mensagem_de_erro_e_mail_inválido() {
 		metodos.validarTexto(cadastropage.emailInvalido, "Oops! Email com formato inválido.");
 		metodos.tirarEvidencia("cadastro", "AlertaEmailInvalido");
+		Executa.fecharNavegador();
 	}
 
 	@When("o usuário tenta se cadastrar com um número de CEP inválido")
 	public void o_usuário_tenta_se_cadastrar_com_um_número_de_cep_inválido() {
-		metodos.escrever(cadastropage.nome, "Fulano de Tal");
-		metodos.escrever(cadastropage.cpf, "18259550008");
-		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com");
-		metodos.escrever(cadastropage.whatsapp, "67982341457");
-		metodos.escrever(cadastropage.cep, "224515301");
-		metodos.clicar(cadastropage.buscarCepBtn);
-		metodos.escrever(cadastropage.numero, "297");
-		metodos.escrever(cadastropage.complemento, "Casa 1");
+		metodos.escrever(cadastropage.nome, "Fulano de Tal", "preenchendo o campo nome");
+		metodos.escrever(cadastropage.cpf, "18259550008", "preenchendo o campo CPF");
+		metodos.escrever(cadastropage.email, "fulanodetal@gmail.com", "preenchendo o campo e-mail");
+		metodos.escrever(cadastropage.whatsapp, "67982341457", "preenchendo o campo WhatsApp");
+		metodos.escrever(cadastropage.cep, "224515301", "preenchendo o campo CEP");
+		metodos.clicar(cadastropage.buscarCepBtn, "clicando em botão buscar CEP");
+		metodos.escrever(cadastropage.numero, "297", "preenchendo o campo número");
+		metodos.escrever(cadastropage.complemento, "Casa 1", "preenchendo o campo complemento");
 		metodos.tirarEvidencia("cadastro", "CEPInvalido");
-		metodos.clicar(cadastropage.cadastroBtn);
+		metodos.clicar(cadastropage.cadastroBtn, "clicando no botão para fazer cadastro");
 	}
 
 	@Then("o sistema apresenta uma mensagem de erro “CEP não encontrado”")
 	public void o_sistema_apresenta_uma_mensagem_de_erro_cep_não_encontrado() {
 		metodos.validarTexto(cadastropage.CEPInvalido, "Informe um CEP válido");
 		metodos.tirarEvidencia("cadastro", "AlertaCEPInvalido");
+		Executa.fecharNavegador();
 	}
 
+	@When("o usuário tenta se cadastrar selecionando mais de um método de entrega")
+	public void oUsuárioTentaSeCadastrarSelecionandoMaisDeUmMétodoDeEntrega() {
+		metodos.clicar(cadastropage.moto, "escolhendo método bike eletrica");
+		metodos.clicar(cadastropage.bikeEletrica, "escolhendo método bike eletrica");
+		metodos.tirarEvidencia("cadastro", "SelecionandoMaisDeUmMetodoDeEntrega");
+	}
+
+	@Then("o sistema apresenta uma mensagem de erro “Selecionar apenas um método de entrega”")
+	public void oSistemaApresentaUmaMensagemDeErroSelecionarApenasUmMétodoDeEntrega() {
+		metodos.validarTexto(cadastropage.apenasUmMetodo, "Oops! Selecione apenas um método de entrega");
+		metodos.tirarEvidencia("cadastro", "AlertaApenasUmMetodoDeEntrega");
+		Executa.fecharNavegador();
+	}
 }

@@ -24,12 +24,24 @@ import conexao.DriverFactory;
 
 public class Metodos extends DriverFactory {
 
-	public void clicar(By elemento) {
-		driver.findElement(elemento).click();
+	public void clicar(By elemento, String descricaoPasso) {
+		try {
+			driver.findElement(elemento).click();
+		} catch (Exception e) {
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+		}
 	}
 
-	public void escrever(By elemento, String texto) {
-		driver.findElement(elemento).sendKeys(texto);
+	public void escrever(By elemento, String texto, String descricaoPasso) {
+		try {
+			driver.findElement(elemento).sendKeys(texto);
+		} catch (Exception e) {
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void enter(By elemento) {
