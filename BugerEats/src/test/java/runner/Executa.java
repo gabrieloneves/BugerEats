@@ -16,7 +16,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @CucumberOptions(
 		features = "src/test/resources/features",
 		glue = "steps",
-		tags = "@regressivos",
+		tags = "@CEPInvalido",
 		monochrome = true,
 		dryRun = false,
 		plugin = {"pretty", "html:target/cucumber-reports.html"},

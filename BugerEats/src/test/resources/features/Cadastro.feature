@@ -11,7 +11,8 @@ Feature: Cadastro para fazer entregas
   	When clicar em “Cadastre-se para fazer entregas”
   	And o usuário é direcionado para página de cadastro
   	
-	@moto @positivo
+	
+ @moto @positivo
   Scenario: Cadastro completo com moto
     And o usuário completa o cadastro com todos os dados obrigatórios
     And o usuário escolhe o método de entrega moto

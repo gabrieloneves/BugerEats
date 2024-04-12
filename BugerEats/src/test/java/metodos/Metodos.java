@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Duration;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -17,8 +18,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import conexao.DriverFactory;
 
@@ -44,34 +49,38 @@ public class Metodos extends DriverFactory {
 		}
 	}
 
-	public void enter(By elemento) {
-		driver.findElement(elemento).submit();
-	}
-
-	public void tirarEvidencia(String pasta, String nomeEvidencia) {
+	public void tirarEvidencia(String pasta, String nomeEvidencia, String descricaoPasso) {
 		TakesScreenshot scrShot = (TakesScreenshot) driver;
 		File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
 		File destFile = new File("./evidencias/" + pasta + "/" + nomeEvidencia + ".png");
 		try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e) {
-			System.out.println("Não foi possivel tirar evidencia");
-			e.printStackTrace();
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public void validarUrl(String urlEsperada) {
-		String url = driver.getCurrentUrl();
-		assertTrue(url.contains(urlEsperada));
+	public void validarUrl(String urlEsperada, String descricaoPasso) {
+		try {
+			String url = driver.getCurrentUrl();
+			assertTrue(url.contains(urlEsperada));
+		} catch (Exception e) {
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+		}
 	}
 
-	public void validarTexto(By elemento, String textoEsperado) {
+	public void validarTexto(By elemento, String textoEsperado, String descricaoPasso) {
 		try {
 			String textoCapturado = driver.findElement(elemento).getText();
 			assertEquals(textoEsperado, textoCapturado);
 		} catch (Exception e) {
-			System.out.println("Não foi possivel validar texto");
-			e.printStackTrace();
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -93,18 +102,14 @@ public class Metodos extends DriverFactory {
 				case NUMERIC:
 					return String.valueOf((int) celula.getNumericCellValue());
 				}
-
 			}
-
 		} catch (Exception e) {
 			System.out.println("Erro ao ler planilha");
-
 		}
-
 		return null;
 	}
 
-	public void uploadArquivo() {
+	public void uploadArquivo(String descricaoPasso) {
 		Robot robot = null;
 		try {
 			robot = new Robot();
@@ -122,12 +127,30 @@ public class Metodos extends DriverFactory {
 			robot.delay(1000);
 
 		} catch (Exception e) {
-
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
 		}
 	}
 
-	public void pausa() throws InterruptedException {
-		Thread.sleep(5000);
+	public void scrollTela(int n1, int n2) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(" + n1 + "," + n2 + ")");
 	}
 
+	public void tirarEvidenciadoAlertaCEPInvalido(String descricaoPasso) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement element = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[text()='Informe um CEP válido']")));
+		TakesScreenshot scrShot = (TakesScreenshot) driver;
+		File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
+		File destFile = new File("./evidencias/cadastro/AlertaCEPInvalido.png");
+		try {
+			FileUtils.copyFile(srcFile, destFile);
+		} catch (IOException e) {
+			System.out.println("***** Erro no passo *****" + descricaoPasso);
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+		}
+	}
 }
